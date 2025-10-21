@@ -10,7 +10,7 @@ import java.util.Map;
 @Getter @Setter @AllArgsConstructor
 public class SourceConfig {
 
-    @NotBlank String type;          // "rest" | "soap" | "file"
-    @NotNull Map<String,Object> config;
-    List<String> dependsOn ;           // réservé multi-sources
+    @NotBlank private String type;          // "rest" | "soap" | "file"
+    @NotNull private Map<String,Object> config;
+    private List<String> dependsOn ;           // réservé multi-sources
 }

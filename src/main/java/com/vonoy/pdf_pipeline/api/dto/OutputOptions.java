@@ -6,6 +6,6 @@ import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor
 public class OutputOptions {
-    @NotBlank String fileName;
-    boolean inline;
+    @NotBlank private String fileName;
+    private boolean inline;
 }

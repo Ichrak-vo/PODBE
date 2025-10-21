@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 @Getter @Setter @AllArgsConstructor
 public class PdfJobRequest {
-    @NotBlank String apiKey;
-    Map<String, Object> data;
+    @NotBlank
+    private String apiKey;
+    private Map<String, Object> data;
     private String outputFileName;
     private Language language;
 }
