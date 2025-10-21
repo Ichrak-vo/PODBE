@@ -2,10 +2,8 @@ package com.vonoy.pdf_pipeline.controller;
 
 import com.vonoy.pdf_pipeline.api.dto.PdfJobRequest;
 import com.vonoy.pdf_pipeline.services.PdfService;
+import com.vonoy.pdf_pipeline.util.PdfUtils;
 import jakarta.validation.Valid;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -39,33 +37,15 @@ public class PdfController {
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> generate(@Valid @RequestBody PdfJobRequest req) {
-        try {
             byte[] pdfBytes = pdfService.generate(req);
-
-            String fileName = (req.getOutputFileName() == null || req.getOutputFileName().isBlank())
-                    ? "result.pdf"
-                    : (req.getOutputFileName().toLowerCase().endsWith(".pdf")
-                        ? req.getOutputFileName()
-                        : req.getOutputFileName() + ".pdf");
-
+            String fileName = PdfUtils.resolveFileName(req.getOutputFileName());
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDisposition(
                 ContentDisposition.inline().filename(fileName).build()
             );
             headers.setContentLength(pdfBytes.length);
-
             return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .contentType(MediaType.TEXT_PLAIN)
-                    .body(("Error: " + e.getMessage()).getBytes(StandardCharsets.UTF_8));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .contentType(MediaType.TEXT_PLAIN)
-                    .body(("Server error: " + e.getMessage()).getBytes(StandardCharsets.UTF_8));
-        }
     }
 
 }
