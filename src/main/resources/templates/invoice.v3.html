@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${titre != null ? titre : 'Delivery Confirmation - Vonoy'}">Delivery Confirmation - Vonoy</title>
+
+    <style>
+        @page { size: A4; margin: 12mm; }
+
+        @font-face {
+            font-family: 'Noto Naskh Arabic';
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Noto Naskh Arabic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #333;
+            direction: ltr;
+            text-align: left;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .invoice-wrapper {
+            background: #ffffff;
+            padding: 35px;
+            max-width: 850px;
+            margin: 20px auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .invoice-header {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .invoice-header td {
+            vertical-align: top;
+            padding: 0;
+        }
+
+        .company-info {
+            width: 70%;
+        }
+
+        .company-info strong {
+            font-size: 26px;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .company-info span, .company-info a {
+            font-size: 13px;
+            color: #555;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info a {
+            color: #3498db;
+        }
+
+        .company-info a:hover {
+            color: #2980b9;
+        }
+
+        .logo-container {
+            width: 30%;
+            text-align: right;
+            padding-left: 20px;
+        }
+
+        .logo-container img {
+            max-height: 80px;
+            width: auto;
+            border-radius: 4px;
+        }
+
+        .intro-message {
+            direction: rtl;
+            text-align: right;
+            color: #555;
+            margin-bottom: 28px;
+            font-size: 14px;
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 6px;
+            border-right: 4px solid #3498db;
+            line-height: 1.7;
+        }
+
+        .pod-section {
+            margin-top: 28px;
+            background: #fafafa;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 24px;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .pod-section h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .pod-section img {
+            max-width: 95%;
+            max-height: 180mm;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .invoice-footer {
+            margin-top: 40px;
+            font-size: 11px;
+            text-align: center;
+            color: #777;
+            padding-top: 20px;
+            border-top: 1px solid #e8e8e8;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+<div class="invoice-wrapper">
+
+    <table class="invoice-header">
+        <tr>
+            <td class="company-info">
+                <strong th:text="${compName != null ? compName : 'Vonoy Logistics'}">Vonoy Logistics</strong>
+                <span>Phone: <span th:text="${compTel1 != null ? compTel1 : '(+216) — — — — — — —'}">(+216) — — — — — — —</span></span>
+                <span>Fax: <span th:text="${compTel2 != null ? compTel2 : '(+216) — — — — — — —'}">(+216) — — — — — — —</span></span>
+                <a th:href="${'mailto:' + (emailadd != null ? emailadd : 'info@vonoy.co')}"
+                   th:text="${emailadd != null ? emailadd : 'info@vonoy.co'}">info@vonoy.co</a>
+                <a th:href="${link != null ? #strings.replace(link,'&','&amp;') : 'https://vonoy.co'}"
+                   th:text="${link != null ? link : 'www.vonoy.co'}" target="_blank">www.vonoy.co</a>
+                <span th:text="${address != null ? address : 'Tunisia — Company Headquarters Address'}">
+                    Tunisia — Company Headquarters Address
+                </span>
+            </td>
+            <td class="logo-container">
+                <img th:src="${logoBase64}" alt="Company logo"/>
+            </td>
+        </tr>
+    </table>
+
+    <p class="intro-message"
+       th:text="${proofLine != null ? proofLine : 'فيما يلي إثبات التسليم المنفَّذ من قبل السائق المكلّف، يرجى مراجعة التفاصيل أدناه.'}">
+    </p>
+
+    <div class="pod-section">
+        <h3>Proof of Delivery Document</h3>
+        <img th:src="${proofBase64}" alt="Proof of Delivery"/>
+    </div>
+
+    <div class="invoice-footer">
+        <p th:text="${footerLine1 != null ? footerLine1 : 'Thank you for choosing Vonoy for your logistics needs.'}"></p>
+        <p th:text="${footerLine2 != null ? footerLine2 : 'This is an automatically generated document and does not require a signature.'}"></p>
+    </div>
+
+</div>
+</body>
+</html>
