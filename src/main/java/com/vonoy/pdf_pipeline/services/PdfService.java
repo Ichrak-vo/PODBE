@@ -1,6 +1,8 @@
 package com.vonoy.pdf_pipeline.services;
 
 import com.vonoy.pdf_pipeline.api.dto.PdfJobRequest;
+
+import java.io.InputStream;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -141,12 +143,11 @@ public byte[] generate(PdfJobRequest req) {
             String baseUri = resolveStaticBaseUri(); // ex: file:/.../target/classes/static/
             builder.withHtmlContent(html, baseUri);
 
-            File fontFile = new File("src/main/resources/fonts/NotoNaskhArabic-VariableFont_wght.ttf");
-            if (fontFile.exists()) {
-                builder.useFont(fontFile, "Noto Naskh Arabic",
-                        400, PdfRendererBuilder.FontStyle.NORMAL, true);
+            InputStream fontStream = getClass().getResourceAsStream("/fonts/NotoNaskhArabic-VariableFont_wght.ttf");
+            if (fontStream != null) {
+                builder.useFont(() -> fontStream, "Noto Naskh Arabic", 400, PdfRendererBuilder.FontStyle.NORMAL, true);
             } else {
-                System.err.println(" Arabic font not found: " + fontFile.getAbsolutePath());
+                System.err.println("Arabic font not found in classpath!");
             }
 
             builder.defaultTextDirection(PdfRendererBuilder.TextDirection.RTL);

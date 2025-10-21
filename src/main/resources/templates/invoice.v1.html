@@ -10,8 +10,8 @@
 
     @font-face {
       font-family: 'Noto Naskh Arabic';
-      src: url('file:///C:/Users/User/Documents/Vonoy/BETMS/Xchanger/tms/src/main/resources/fonts/NotoNaskhArabic-VariableFont_wght.ttf') format('truetype');
-      font-weight: 400; font-style: normal;
+      font-weight: 400;
+      font-style: normal;
     }
 
     body {
@@ -22,7 +22,7 @@
 
     .container {
       background:#fff; padding:16px; border-radius:8px; border:1px solid #ddd;
-      width:90%; max-width:800px; margin:16px auto; box-shadow:2px 2px 10px rgba(0,0,0,0.06);
+      width:90%; max-width:800px; margin:16px auto;
     }
 
     /* ===== Header (sans traits visibles) ===== */
@@ -52,7 +52,7 @@
   text-align: right;
   font-style: italic;
   margin: 18px 0 10px 0;      /* pas de marge latérale */
-  width: fit-content;         /* largeur = contenu */
+  width: auto;         /* largeur = contenu */
   margin-left: auto;          /* pousse le bloc contre le bord droit */
   /* variante logique si tu préfères : margin-inline-start: auto; margin-inline-end: 0; */
   padding-right: 2px;         /* petit coussin visuel à droite (optionnel) */
@@ -62,7 +62,7 @@
       margin-top:8px; border:1px solid #ccc; border-radius:6px;
       padding:10px; text-align:center; page-break-inside:avoid; background:#fff;
     }
-    .pod img { max-width:100%; max-height:180mm; object-fit:contain; display:inline-block; }
+    .pod img { max-width:100%; max-height:180mm; width:auto; display:inline-block; }
 
     .footer {
       margin-top:16px; font-size:10px; text-align:center; color:#333;
